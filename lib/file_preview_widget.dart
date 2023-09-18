@@ -8,6 +8,7 @@ part of 'file_preview.dart';
 class FilePreviewWidget extends StatefulWidget {
   final double width;
   final double height;
+  final Map<String, String>? headers;
   final String path;
   final FilePreviewController? controller;
   FilePreviewCallBack? callBack;
@@ -27,7 +28,8 @@ class FilePreviewWidget extends StatefulWidget {
       required this.height,
       required this.path,
       this.controller,
-      this.callBack})
+      this.callBack,
+      this.headers})
       : super(key: key);
 
   @override
@@ -66,6 +68,7 @@ class FilePreviewWidgetState extends State<FilePreviewWidget> {
             "width": widget.width,
             "height": widget.height,
             "path": widget.path,
+            "headers": widget.headers ?? {},
           },
           onPlatformViewCreated: _registerChannel,
           creationParamsCodec: const StandardMessageCodec(),

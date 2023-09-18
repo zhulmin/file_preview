@@ -17,6 +17,7 @@ public class FilePreview : NSObject,FlutterPlatformView{
     let width : Float
     let height :Float
     let path : String
+    let headers : [String:String]
     
     var webView:WKWebView
     
@@ -27,6 +28,7 @@ public class FilePreview : NSObject,FlutterPlatformView{
         self.width = Float(dict.value(forKey: "width") as! Double)
         self.height = Float(dict.value(forKey: "height") as! Double)
         self.path = dict.value(forKey: "path") as! String
+        self.headers =  dict.value(forKey: "headers") as! [String:String]
         self.container = UIView(frame: frame)
         self.webView = WKWebView(frame:CGRect(x:0, y:0, width:Int(self.width), height:Int(self.height)))
         super.init()
@@ -63,6 +65,7 @@ public class FilePreview : NSObject,FlutterPlatformView{
             let path2 = filePath.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? ""
             let url = NSURL(string: path2)
             let request = NSMutableURLRequest(url: url! as URL)
+            request.allHTTPHeaderFields = self.headers;
             self.webView.load(request as URLRequest as URLRequest)
         }else{
             let url = NSURL.fileURL(withPath:filePath)
